@@ -1,0 +1,1 @@
+["avg_speed", "max_speed", "overspeed_ratio", "harsh_brake_count", "sharp_turn_count", "night_ratio", "trip_distance_km", "trip_duration_min", "is_night_trip", "has_harsh_brake", "has_sharp_turn", "is_overspeed", "missing"]
