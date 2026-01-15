@@ -1,35 +1,74 @@
-# DriveSureModel
+# DriveSure Risk Scoring Model
 
-1. Setup
-   python3 -m venv venv && source venv/bin/activate
-   pip install -r requirements.txt
+Porto Seguro 2nd place solution adapted for telematics-based driver risk scoring.
 
-2. Generate synthetic training data
-   python3 src/generate_synthetic.py
-   # creates data/training_data.csv
+## 🚀 Quick Start
 
-3. Train model
-   python3 src/train_model.py
-   # outputs models/drivesure_risk_model.txt and features.json
+### 1. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
 
-4. Run local test inference
-   python3 src/infer.py
+### 2. Run Complete Pipeline
+```bash
+python run_pipeline.py --step all
+```
 
-5. Run FastAPI server
-   cd src/api
-   uvicorn main:app --host 0.0.0.0 --port 8000
+This will:
+1. Generate 30,000 synthetic training trips
+2. Train LightGBM model with cross-validation
+3. Start FastAPI server at `http://localhost:8000`
 
-6. Frontend integration
-   POST trip JSON to http://localhost:8000/api/risk/scoreTrip
-   Frontend expects:
-   {
-     "trip_id": "T1",
-     "avg_speed": 48.5,
-     "max_speed": 92,
-     "overspeed_ratio": 0.18,
-     "harsh_brake_count": 3,
-     "sharp_turn_count": 1,
-     "night_ratio": 0.35,
-     "trip_distance_km": 12.5,
-     "trip_duration_min": 22
-   }
+### 3. Test API
+
+Visit `http://localhost:8000/docs` for interactive API documentation.
+
+Example request:
+```bash
+curl -X POST "http://localhost:8000/api/risk/scoreTrip" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "trip_id": "T123",
+    "avg_speed": 65.5,
+    "max_speed": 95.0,
+    "overspeed_ratio": 0.18,
+    "harsh_brake_count": 3,
+    "sharp_turn_count": 2,
+    "acceleration_events": 4,
+    "night_ratio": 0.25,
+    "weekend_trip": 0,
+    "trip_distance_km": 25.5,
+    "trip_duration_min": 35.0,
+    "weather_condition": 0,
+    "road_type": 1
+  }'
+```
+
+## 📊 Model Performance
+
+- Algorithm: LightGBM (2nd place Porto Seguro solution)
+- Cross-validation: 5-fold stratified
+- Metric: Normalized Gini coefficient
+- Expected CV score: 0.28-0.29
+
+## 🔧 Individual Steps
+```bash
+# Generate data only
+python run_pipeline.py --step data
+
+# Train model only
+python run_pipeline.py --step train
+
+# Start API only
+python run_pipeline.py --step api
+```
+
+## 📁 Project Structure
+````
+drivesure-risk-model/
+├── data/               # Training data
+├── models/             # Trained models
+├── src/                # Core ML code
+├── backend/            # FastAPI application
+├── notebooks/          # Jupyter notebooks
+└── tests/              # Unit tests

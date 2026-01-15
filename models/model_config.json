@@ -1,0 +1,59 @@
+{
+  "features": [
+    "avg_speed",
+    "max_speed",
+    "overspeed_ratio",
+    "harsh_brake_count",
+    "sharp_turn_count",
+    "night_ratio",
+    "trip_distance_km",
+    "trip_duration_min",
+    "is_night_trip",
+    "has_harsh_brake",
+    "has_sharp_turn",
+    "is_overspeed",
+    "missing"
+  ],
+  "cv_auc": 0.929551236111111,
+  "cv_gini": 0.8591024722222221,
+  "fold_scores": [
+    {
+      "auc": 0.9258108796296295,
+      "gini": 0.8516217592592593
+    },
+    {
+      "auc": 0.9331775462962963,
+      "gini": 0.8663550925925927
+    },
+    {
+      "auc": 0.9288929398148148,
+      "gini": 0.8577858796296297
+    },
+    {
+      "auc": 0.9314907407407407,
+      "gini": 0.8629814814814815
+    },
+    {
+      "auc": 0.9288862268518518,
+      "gini": 0.8577724537037038
+    }
+  ],
+  "params": {
+    "objective": "binary",
+    "boosting_type": "gbdt",
+    "learning_rate": 0.05,
+    "num_leaves": 31,
+    "max_depth": 6,
+    "feature_fraction": 0.8,
+    "bagging_freq": 1,
+    "bagging_fraction": 0.8,
+    "min_data_in_leaf": 50,
+    "min_sum_hessian_in_leaf": 5.0,
+    "lambda_l1": 0.1,
+    "lambda_l2": 0.1,
+    "verbose": -1,
+    "seed": 42,
+    "metric": "binary_logloss"
+  },
+  "best_iteration": 175
+}
