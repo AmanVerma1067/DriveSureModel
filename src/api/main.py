@@ -1,7 +1,7 @@
 # src/api/main.py
 import os
 import json
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Any
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -73,7 +73,7 @@ class RiskResponse(BaseModel):
     risk_prob: float = Field(..., description="Risk probability (0-1)")
     safety_score: int = Field(..., ge=0, le=100, description="Safety score (0-100, higher is safer)")
     risk_category: str = Field(..., description="Risk category: low, medium, high, very_high")
-    top_factors: List[Dict[str, any]] = Field(..., description="Top risk factors")
+    top_factors: List[Dict[str, Any]] = Field(..., description="Top risk factors")
 
 def prepare_vector(trip: TripFeatures) -> np.ndarray:
     """
